@@ -9,7 +9,9 @@ import {
   Cpu,
   ChevronDown,
   Eye,
-  X
+  X,
+  TrendingUp,
+  BarChart3
 } from 'lucide-react';
 
 export default function Header({
@@ -21,7 +23,9 @@ export default function Header({
   isPreviewMode = false,
   onExitPreview,
   onEnterPreview,
-  onSignOut
+  onSignOut,
+  teacherTab = 'studio',
+  onSelectTeacherTab
 }) {
   const [model, setModel] = useState(engineModel || '');
   const [profileOpen, setProfileOpen] = useState(false);
@@ -143,12 +147,43 @@ export default function Header({
                 </div>
               ) : (
                 /* Standard Teacher Studio Workspace Navigation */
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#0c2a25] text-white border border-[#D4AF37]/30 text-xs font-semibold shadow-inner">
+                <div className="flex items-center gap-1.5 p-1 bg-[#0c2a25]/90 rounded-2xl border border-white/10 shadow-xs">
+                  <button
+                    type="button"
+                    onClick={() => onSelectTeacherTab && onSelectTeacherTab('studio')}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
+                      teacherTab === 'studio'
+                        ? 'bg-[#123C35] text-white border border-[#D4AF37]/40 shadow-sm'
+                        : 'text-emerald-100/80 hover:text-white hover:bg-white/5'
+                    }`}
+                    title="Curriculum Generation, Validation & Asset Studio"
+                  >
                     <LayoutDashboard className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    <span>Teacher Studio</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse ml-0.5" />
-                  </div>
+                    <span>Studio</span>
+                    {teacherTab === 'studio' && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse ml-0.5" />
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => onSelectTeacherTab && onSelectTeacherTab('performance')}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
+                      teacherTab === 'performance'
+                        ? 'bg-[#123C35] text-white border border-[#D4AF37]/40 shadow-sm'
+                        : 'text-emerald-100/80 hover:text-white hover:bg-white/5'
+                    }`}
+                    title="Class-wide Student Performance, Objective Mastery & Interventions"
+                  >
+                    <BarChart3 className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <span>Student Performance</span>
+                    {teacherTab === 'performance' && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse ml-0.5" />
+                    )}
+                  </button>
+
+                  <div className="h-4 w-[1px] bg-white/15 mx-1 hidden sm:block" />
+
                   <button
                     type="button"
                     onClick={onEnterPreview}
@@ -156,7 +191,8 @@ export default function Header({
                     title="Preview verified student portal experience"
                   >
                     <Eye className="w-3.5 h-3.5 text-[#123C35]" />
-                    <span>Preview Student View</span>
+                    <span className="hidden sm:inline">Preview</span>
+                    <span>Student View</span>
                   </button>
                 </div>
               )}

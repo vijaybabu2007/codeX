@@ -61,6 +61,7 @@ All generated materials pass through a rigorous, rule-based validation engine be
 - **Manual Question Editor:** Full manual edit capability with instant real-time re-validation.
 - **Immutable Version History & Diffing:** Visual version comparison shows exact textual and distractor changes across revisions.
 - **Teacher Override Audit:** Requires mandatory justification notes stored in the permanent audit trail when overriding a validation warning.
+- **Teacher Student Performance & Mastery Dashboard:** Real-time classroom analytics tracking quiz scores, pass rates, objective-level mastery heatmaps, at-risk student intervention alerts, and individual student diagnostic dossiers.
 
 ---
 
@@ -382,6 +383,9 @@ LessonFoundry includes **136 automated test cases** guaranteeing 100% determinis
 | `POST` | `/api/v1/student/quiz/submit` | Submit quiz answers & compute scores | Student |
 | `GET` | `/api/v1/student/mastery/{pack_id}` | Retrieve objective-level mastery tiers | Student |
 | `POST` | `/api/v1/student/voice/chat` | Context-bounded Voice Tutor interaction | Student |
+| `GET` | `/api/v1/teacher/analytics/overview` | Class-wide student performance & mastery dashboard | Teacher |
+| `GET` | `/api/v1/teacher/analytics/student/{student_id}` | Individual student diagnostic dossier & attempts | Teacher |
+
 
 ---
 

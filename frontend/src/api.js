@@ -207,3 +207,32 @@ export async function fetchStudentMastery(packId) {
   return res.json();
 }
 
+export async function fetchTeacherAnalytics(packId = null) {
+  const url = packId && packId !== 'all'
+    ? `${API_BASE}/teacher/analytics/overview?pack_id=${encodeURIComponent(packId)}`
+    : `${API_BASE}/teacher/analytics/overview`;
+  const res = await fetch(url, {
+    headers: authHeaders()
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: 'Failed to load teacher analytics' }));
+    throw new Error(err.detail || 'Failed to load teacher analytics');
+  }
+  return res.json();
+}
+
+export async function fetchTeacherStudentDetail(studentId, packId = null) {
+  const url = packId && packId !== 'all'
+    ? `${API_BASE}/teacher/analytics/student/${encodeURIComponent(studentId)}?pack_id=${encodeURIComponent(packId)}`
+    : `${API_BASE}/teacher/analytics/student/${encodeURIComponent(studentId)}`;
+  const res = await fetch(url, {
+    headers: authHeaders()
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: 'Failed to load student diagnostic detail' }));
+    throw new Error(err.detail || 'Failed to load student diagnostic detail');
+  }
+  return res.json();
+}
+
+

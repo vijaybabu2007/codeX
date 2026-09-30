@@ -8,6 +8,7 @@ import VersionDiffModal from './components/VersionDiffModal';
 import WarningAcknowledgementModal from './components/WarningAcknowledgementModal';
 import StudentPortal from './components/StudentPortal';
 import AlignmentMatrixView from './components/AlignmentMatrixView';
+import TeacherStudentPerformance from './components/TeacherStudentPerformance';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import { authService } from './services/authService';
@@ -47,7 +48,11 @@ import {
   Layers,
   History,
   Clock,
-  RefreshCw
+  RefreshCw,
+  BarChart3,
+  TrendingUp,
+  Users,
+  GraduationCap
 } from 'lucide-react';
 
 class ErrorBoundary extends React.Component {
@@ -93,6 +98,7 @@ export default function App() {
   const [mode, setMode] = useState(() => ((authService.getCurrentUser()?.role || '').toUpperCase() === 'STUDENT' ? 'student' : 'teacher'));
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [currentPath, setCurrentPath] = useState(() => window.location.pathname || '/');
+  const [teacherTab, setTeacherTab] = useState(() => (window.location.pathname === '/teacher/performance' ? 'performance' : 'studio'));
   const [presets, setPresets] = useState([]);
 
   // Client-side route synchronization and browser history management
@@ -121,15 +127,21 @@ export default function App() {
           if (path === '/student/preview' || path.startsWith('/student')) {
             setIsPreviewMode(true);
             setMode('student');
+          } else if (path === '/teacher/performance') {
+            setMode('teacher');
+            setIsPreviewMode(false);
+            setTeacherTab('performance');
           } else if (path === '/login' || path === '/register' || path === '/') {
             window.history.replaceState(null, '', '/teacher/dashboard');
             setCurrentPath('/teacher/dashboard');
             setMode('teacher');
             setIsPreviewMode(false);
+            setTeacherTab('studio');
             return;
           } else {
             setMode('teacher');
             setIsPreviewMode(false);
+            setTeacherTab('studio');
           }
         }
       }
@@ -156,6 +168,7 @@ export default function App() {
     } else {
       setMode('teacher');
       setIsPreviewMode(false);
+      setTeacherTab('studio');
       navigate('/teacher/dashboard');
     }
   };
@@ -170,7 +183,7 @@ export default function App() {
   const handleExitPreview = () => {
     setIsPreviewMode(false);
     setMode('teacher');
-    navigate('/teacher/dashboard');
+    navigate(teacherTab === 'performance' ? '/teacher/performance' : '/teacher/dashboard');
   };
 
   const handleSignOut = async () => {
@@ -672,6 +685,11 @@ export default function App() {
         onEnterPreview={handleEnterPreview}
         onExitPreview={handleExitPreview}
         onSignOut={handleSignOut}
+        teacherTab={teacherTab}
+        onSelectTeacherTab={(tab) => {
+          setTeacherTab(tab);
+          navigate(tab === 'performance' ? '/teacher/performance' : '/teacher/dashboard');
+        }}
       />
 
       <ErrorBoundary onReset={handleExitPreview}>
@@ -701,6 +719,14 @@ export default function App() {
             )}
             <StudentPortal packId={pack?.pack_id} />
           </div>
+        ) : teacherTab === 'performance' ? (
+          <TeacherStudentPerformance
+            currentPackId={pack?.pack_id}
+            onNavigateToStudio={() => {
+              setTeacherTab('studio');
+              navigate('/teacher/dashboard');
+            }}
+          />
         ) : (
         <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
           {/* Preset Command Bar */}
@@ -723,6 +749,37 @@ export default function App() {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Quick Access to Student Performance Dashboard */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-[#123C35] to-[#1a4a42] text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md border border-[#D4AF37]/30">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-[#0c2a25] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] shrink-0 shadow-sm">
+                <BarChart3 className="w-5 h-5 text-[#D4AF37]" />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                  <span>Teacher Analytics: Check Student Performance</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#D4AF37] text-[#123C35] font-bold uppercase tracking-wider">
+                    Live Dashboard
+                  </span>
+                </h3>
+                <p className="text-xs text-emerald-100/80">
+                  Inspect class quiz results, analyze curricular objective mastery tiers, and diagnose students needing immediate intervention.
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setTeacherTab('performance');
+                navigate('/teacher/performance');
+              }}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#D4AF37] hover:bg-[#e0be4d] text-[#123C35] font-bold text-xs transition cursor-pointer shadow-sm shrink-0"
+            >
+              <span>Open Student Performance Dashboard</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
           </div>
 
           {/* Error Banner */}
@@ -956,6 +1013,17 @@ export default function App() {
                     <CheckCircle className="w-3.5 h-3.5 text-[#059669]" />
                     Adaptive Mastery: Objective Performance Available
                   </span>
+                  <button
+                    onClick={() => {
+                      setTeacherTab('performance');
+                      navigate('/teacher/performance');
+                    }}
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-[#123C35] border border-[#CBD5E1] text-xs font-bold transition cursor-pointer shadow-xs"
+                    title="Check student scores and objective mastery on this pack"
+                  >
+                    <BarChart3 className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <span>Check Student Performance</span>
+                  </button>
                   <button
                     onClick={() => setMode('student')}
                     className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#123C35] hover:bg-[#0c2a25] text-white text-xs font-bold transition cursor-pointer shadow-sm"

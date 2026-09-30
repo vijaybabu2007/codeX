@@ -19,6 +19,7 @@ from backend.api.routes_student import router as student_router
 from backend.api.routes_presets import router as presets_router
 from backend.api.routes_question import router as question_router
 from backend.api.routes_auth import router as auth_router
+from backend.api.routes_teacher_analytics import router as teacher_analytics_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -50,6 +51,7 @@ app.include_router(student_router, prefix=settings.API_V1_STR)
 app.include_router(presets_router, prefix=settings.API_V1_STR)
 app.include_router(question_router, prefix=settings.API_V1_STR)
 app.include_router(auth_router, prefix=settings.API_V1_STR)
+app.include_router(teacher_analytics_router, prefix=settings.API_V1_STR)
 
 from backend.config import get_effective_llm_provider, get_effective_groq_model, get_effective_gemini_model
 
