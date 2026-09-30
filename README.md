@@ -3,6 +3,10 @@
 *YUVA Megathon 2026 EduGenAI*
 
 ---
+TEAM DETAILS:
+1.VIJAY AB,[9042426460],[vijaybabu392007@gmail.com]
+2.SHANMUGANATHAN,[9487260768],[sannathan07@gmail.com]
+3.VISHWAJITH S,[9363641200],[vishwa.cse4@gmail.com]
 
 ## Overview
 
