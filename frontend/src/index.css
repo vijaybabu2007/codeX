@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
+    
+    /* Exact User Specification Palette */
+    --bg-main: #F8FAFC;                 /* Main Light Color: Soft White / Very Light Grey */
+    --color-primary-dark: #123C35;       /* Primary Dark Color: Deep Emerald Green */
+    --color-primary-hover: #0c2a25;      /* Darker Emerald for hover */
+    --color-accent-gold: #D4AF37;        /* Accent: Soft Gold (sparingly) */
+    --color-text-normal: #1F2937;        /* Normal text: Deep Charcoal */
+    --color-text-muted: #64748B;         /* Secondary / Muted Slate */
+    
+    --bg-surface: #FFFFFF;               /* Pure White Cards */
+    --bg-surface-elevated: #F1F5F9;      /* Light Grey Container / Inset */
+    
+    --border-subtle: #E2E8F0;            /* Very light grey border */
+    --border-strong: #CBD5E1;            /* Distinct border */
+    --border-focus: #123C35;             /* Deep Emerald Focus */
+    
+    --color-approved: #059669;
+    --color-approved-bg: #ECFDF5;
+    --color-approved-border: #A7F3D0;
+    
+    --color-revision: #D97706;
+    --color-revision-bg: #FFFBEB;
+    --color-revision-border: #FDE68A;
+    
+    --color-critical: #DC2626;
+    --color-critical-bg: #FEF2F2;
+    --color-critical-border: #FECACA;
+    
+    --color-override: #7C3AED;
+    --color-override-bg: #F5F3FF;
+    --color-override-border: #DDD6FE;
+  }
+
+  * {
+    border-color: var(--border-subtle);
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--color-text-normal);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    letter-spacing: -0.01em;
+  }
+
+  /* Custom Clean Light Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F1F5F9;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94A3B8;
+  }
+
+  ::selection {
+    background-color: rgba(18, 60, 53, 0.2);
+    color: #123C35;
+  }
+}
+
+/* Premium White Cards with Soft Shadow */
+.premium-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 
+    0 1px 3px 0 rgba(0, 0, 0, 0.05),
+    0 4px 6px -1px rgba(0, 0, 0, 0.025);
+  border-radius: 1rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #1F2937;
+}
+
+.premium-card:hover {
+  border-color: #CBD5E1;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.07),
+    0 10px 15px -3px rgba(0, 0, 0, 0.04);
+}
+
+.premium-card-accent {
+  background: #FFFFFF;
+  border: 1px solid rgba(18, 60, 53, 0.25);
+  box-shadow: 
+    0 4px 12px -2px rgba(18, 60, 53, 0.08),
+    inset 0 1px 0 0 rgba(212, 175, 55, 0.2);
+  border-radius: 1rem;
+}
+
+/* Primary Button: Deep Emerald Green (#123C35) + Crisp White Text */
+.btn-primary {
+  background-color: #123C35;
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 4px 8px rgba(18, 60, 53, 0.18);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(18, 60, 53, 0.9);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0c2a25;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    0 6px 14px rgba(18, 60, 53, 0.26);
+  transform: translateY(-0.5px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0.5px) scale(0.99);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #1F2937;
+  font-weight: 500;
+  border-radius: 0.75rem;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+  color: #123C35;
+}
+
+/* Accent Gold Highlight Button */
+.btn-gold {
+  background-color: #D4AF37;
+  color: #123C35;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 6px rgba(212, 175, 55, 0.3);
+  transition: all 0.15s ease;
+}
+
+.btn-gold:hover:not(:disabled) {
+  background-color: #c49f2b;
+  transform: translateY(-0.5px);
+}
+
+/* Header: Deep Emerald Green (#123C35) + Gold Accent Border */
+.header-glass {
+  background: #123C35;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  color: #FFFFFF;
+}
+
+/* Step Badges with Deep Emerald and Gold Border */
+.step-badge {
+  background: #123C35;
+  color: #FFFFFF;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+/* Clean Badges for Light Mode */
+.badge-approved {
+  background: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+  font-weight: 600;
+}
+
+.badge-revision {
+  background: #FFFBEB;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+  font-weight: 600;
+}
+
+.badge-critical {
+  background: #FEF2F2;
+  color: #991B1B;
+  border: 1px solid #FECACA;
+  font-weight: 600;
+}
+
+.badge-draft {
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #CBD5E1;
+  font-weight: 600;
+}
+
+.badge-override {
+  background: #F5F3FF;
+  color: #5B21B6;
+  border: 1px solid #DDD6FE;
+  font-weight: 600;
+}
+
+.badge-gold {
+  background: #FEFCE8;
+  color: #854D0E;
+  border: 1px solid #FEF08A;
+  font-weight: 600;
+}
+
+/* Shimmer Animation for AI Generation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-bg {
+  background: linear-gradient(
+    90deg,
+    rgba(18, 60, 53, 0.05) 0%,
+    rgba(18, 60, 53, 0.15) 50%,
+    rgba(18, 60, 53, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Code / Monospace Container */
+.mono-box {
+  font-family: var(--font-mono);
+  font-size: 0.775rem;
+  line-height: 1.6;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: #1F2937;
+  border-radius: 0.75rem;
+}

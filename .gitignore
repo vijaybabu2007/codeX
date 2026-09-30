@@ -1,0 +1,24 @@
+# Environments and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+*.db
+*.db-wal
+*.db-shm
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+.vite/
+
+# IDE / OS / Testing
+.pytest_cache/
+.DS_Store
+Thumbs.db
+
